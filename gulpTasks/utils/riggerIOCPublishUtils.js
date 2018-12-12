@@ -19,7 +19,7 @@ var RiggerIOCPublishUtils = {
         
         var tsResult = gulp.src(["src/riggerLayaSA/**/*.ts", "libs/**/*.ts"]).pipe(sorter()).pipe(tsPro());
         tsResult.dts.pipe(gulp.dest("./dist/riggerLayaSA/dts"));
-        tsResult.js.pipe(concat("riggerIOC.min.js")).pipe(gulp.dest("./dist/riggerLayaSA/bin"));        
+        tsResult.js.pipe(concat("riggerLayaSA.min.js")).pipe(gulp.dest("./dist/riggerLayaSA/bin"));        
     },
 }
 
