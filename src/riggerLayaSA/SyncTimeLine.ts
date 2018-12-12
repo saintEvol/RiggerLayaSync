@@ -5,7 +5,10 @@ module riggerLayaSA {
 	export class SyncTimeLine extends riggerIOC.WaitableTask<Laya.TimeLine>{
 		protected startTimeOrLabel: number | string = null;
 		protected loop: boolean = null;
-		
+
+		private static pool: riggerIOC.Pool = new riggerIOC.Pool();
+		private static sign: string = "_sign";
+
 		public get scale(): number {
 			return this.mContent.scale;
 		}
@@ -18,6 +21,10 @@ module riggerLayaSA {
 			super(new Laya.TimeLine());
 		}
 
+		static create(): SyncTimeLine {
+			return SyncTimeLine.pool.getItemByClass<SyncTimeLine>(SyncTimeLine.sign, SyncTimeLine);
+		}
+
 		/**
          * 控制一个对象，从当前点移动到目标点。
          * @param	target		要控制的对象。
@@ -26,8 +33,8 @@ module riggerLayaSA {
          * @param	ease		缓动类型
          * @param	offset		相对于上一个对象，偏移多长时间（单位：毫秒）。
          */
-        static to(target: any, props: any, duration: number, ease?: Function, offset?: number): SyncTimeLine{
-			let ret: SyncTimeLine = new SyncTimeLine();
+		static to(target: any, props: any, duration: number, ease?: Function, offset?: number): SyncTimeLine {
+			let ret: SyncTimeLine = SyncTimeLine.create();
 			ret.to(target, props, duration, ease, offset);
 
 			return ret;
@@ -40,11 +47,19 @@ module riggerLayaSA {
          * @param	ease		缓动类型
          * @param	offset		相对于上一个对象，偏移多长时间（单位：毫秒）
          */
-        static from(target: any, props: any, duration: number, ease?: Function, offset?: number): SyncTimeLine{
-			let ret: SyncTimeLine = new SyncTimeLine();
+		static from(target: any, props: any, duration: number, ease?: Function, offset?: number): SyncTimeLine {
+			let ret: SyncTimeLine = SyncTimeLine.create();
 			ret.from(target, props, duration, ease, offset);
 
 			return ret;
+		}
+
+		/**
+		 * 回收
+		 * @param item 
+		 */
+		recover():void{
+			SyncTimeLine.pool.recover<SyncTimeLine>(SyncTimeLine.sign, this.reset());
 		}
 
 		/**
@@ -103,7 +118,7 @@ module riggerLayaSA {
          * 从指定的标签开始播。
          * @param	Label 标签名。
          */
-		gotoLabel(Label: string, immediately:boolean = false): SyncTimeLine {
+		gotoLabel(Label: string, immediately: boolean = false): SyncTimeLine {
 			return this.play(Label, false, immediately)
 		}
 
@@ -128,10 +143,10 @@ module riggerLayaSA {
          */
 		play(timeOrLabel?: any, loop?: boolean, immediately: boolean = false): SyncTimeLine {
 			if (!this.mContent) return;
-			
+
 			this.startTimeOrLabel = timeOrLabel;
 			this.loop = loop;
-			
+
 			if (immediately) {
 				this.doPlay();
 			}
@@ -139,10 +154,10 @@ module riggerLayaSA {
 			return this;
 		}
 
-		cancel(reason?:any){
-			if(!this.mContent) return;
+		cancel(reason?: any) {
+			if (!this.mContent) return;
 			this.mContent.pause();
-			
+
 			super.cancel(reason);
 		}
 
@@ -193,7 +208,7 @@ module riggerLayaSA {
 			super.dispose();
 		}
 
-		protected startTask(): SyncTimeLine{
+		protected startTask(): SyncTimeLine {
 			super.startTask();
 			this.doPlay();
 
@@ -208,7 +223,7 @@ module riggerLayaSA {
 
 		}
 
-		private doPlay():void{
+		private doPlay(): void {
 			if (!this.mContent.hasListener(Laya.Event.COMPLETE)) {
 				this.mContent.once(Laya.Event.COMPLETE, this, this.onComplete);
 			}

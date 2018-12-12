@@ -5,8 +5,11 @@ declare module riggerLayaSA {
     class SyncTimeLine extends riggerIOC.WaitableTask<Laya.TimeLine> {
         protected startTimeOrLabel: number | string;
         protected loop: boolean;
+        private static pool;
+        private static sign;
         scale: number;
         constructor();
+        static create(): SyncTimeLine;
         /**
          * 控制一个对象，从当前点移动到目标点。
          * @param	target		要控制的对象。
@@ -25,6 +28,11 @@ declare module riggerLayaSA {
          * @param	offset		相对于上一个对象，偏移多长时间（单位：毫秒）
          */
         static from(target: any, props: any, duration: number, ease?: Function, offset?: number): SyncTimeLine;
+        /**
+         * 回收
+         * @param item
+         */
+        recover(): void;
         /**
          * 控制一个对象，从当前点移动到目标点。
          * @param	target		要控制的对象。
