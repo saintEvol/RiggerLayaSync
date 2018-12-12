@@ -187,6 +187,7 @@ module riggerLayaSA {
 		}
 
 		dispose(): void {
+			this.mContent.offAll();
 			this.mContent.destroy();
 			this.mContent = null;
 			super.dispose();
