@@ -1,7 +1,7 @@
 /**
 * 同步版Tween
 */
-module riggerLayaSA {
+module riggerLayaSync {
 	export class SyncTween extends riggerIOC.WaitableTask<Laya.Tween>{
 		private static pool: riggerIOC.Pool = new riggerIOC.Pool();
 		private static sign: "_sign";

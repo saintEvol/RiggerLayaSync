@@ -1,5 +1,5 @@
 {
-  "name": "RiggerSyncAni-Laya",
+  "name": "RiggerLayaSync",
   "version": "1.0.0",
   "description": "我是代码的搬运工",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "RiggerSyncAni-Laya"
+    "RiggerLayaSync"
   ],
   "author": "Saint Evol",
   "license": "ISC",

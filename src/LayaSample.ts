@@ -19,12 +19,12 @@ class GameMain {
         let cancel = riggerIOC.Handler.create(this, this.onCancel, null, false);
 
         let taskExe: riggerIOC.TaskExecutor = new riggerIOC.TaskExecutor();
-        let t1: riggerLayaSA.SyncTween = riggerLayaSA.SyncTween.to(sp, { x: 100 }, 1000);
+        let t1: riggerLayaSync.SyncTween = riggerLayaSync.SyncTween.to(sp, { x: 100 }, 1000);
         taskExe.setCompleteHandler(complete, null);
         taskExe.setCancelHandler(cancel, null);
         // await t1.wait()
-        taskExe.add(riggerLayaSA.SyncTween.to(sp, { x: 100 }, 2000), singComplete, [sp, { x: 100 }], singCancel, [sp, { x: 100 }]);
-        taskExe.add(riggerLayaSA.SyncTween.to(sp, { y: 50 }, 2000), singComplete, [sp, { y: 50 }], singCancel, [sp, { y: 50 }]);
+        taskExe.add(riggerLayaSync.SyncTween.to(sp, { x: 100 }, 2000), singComplete, [sp, { x: 100 }], singCancel, [sp, { x: 100 }]);
+        taskExe.add(riggerLayaSync.SyncTween.to(sp, { y: 50 }, 2000), singComplete, [sp, { y: 50 }], singCancel, [sp, { y: 50 }]);
         // await riggerLayaSA.SyncTween.to(sp, {x: 100}, 1000).wait();
         // await riggerLayaSA.SyncTween.to(sp, {y: 100}, 1000).wait();
 
@@ -59,7 +59,7 @@ class GameMain {
         Laya.stage.addChild(sp);
         sp.name = "sprite1"
 
-        let t1: riggerLayaSA.SyncTimeLine = riggerLayaSA.SyncTimeLine.create();
+        let t1: riggerLayaSync.SyncTimeLine = riggerLayaSync.SyncTimeLine.create();
         t1.addLabel("userfightZoomIn", 0).to(sp, { "x": 50 }, 500, null, 0)
             .addLabel("userfightLanding", 0).to(sp, { "x": 100 }, 300, null, 0)
             .addLabel("pcfightZoomIn", 0).to(sp, { "y": 50 }, 500, null, 0)
@@ -71,15 +71,15 @@ class GameMain {
         Laya.stage.addChild(sp2);
 
         sp2.name = "sprite2"
-        let t2: riggerLayaSA.SyncTimeLine = riggerLayaSA.SyncTimeLine.create();
+        let t2: riggerLayaSync.SyncTimeLine = riggerLayaSync.SyncTimeLine.create();
         t2.addLabel("userfightZoomIn", 0).to(sp2, { "x": 50 }, 500, null, 0)
             .addLabel("userfightLanding", 0).to(sp2, { "x": 100 }, 300, null, 0)
             .addLabel("pcfightZoomIn", 0).to(sp2, { "y": 50 }, 500, null, 0)
 
         cont.add(t2.play("userfightZoomIn", false), singleCompleteH, [sp2], singleCancelH, [sp2]);
 
-        setTimeout(this.onInterupt, 1300, cont)
-        await cont.executeAsync();
+        // setTimeout(this.onInterupt, 1300, cont)
+        await cont.execute();
         t1.recover();
         t2.recover();
         // await t1.play().wait();

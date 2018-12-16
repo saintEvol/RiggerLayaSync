@@ -1,7 +1,7 @@
 /**
 * name 
 */
-module riggerLayaSA {
+module riggerLayaSync {
 	export class SyncTimeLine extends riggerIOC.WaitableTask<Laya.TimeLine>{
 		protected startTimeOrLabel: number | string = null;
 		protected loop: boolean = null;

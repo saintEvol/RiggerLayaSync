@@ -49,8 +49,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 /**
 * name
 */
-var riggerLayaSA;
-(function (riggerLayaSA) {
+var riggerLayaSync;
+(function (riggerLayaSync) {
     var SyncTimeLine = /** @class */ (function (_super) {
         __extends(SyncTimeLine, _super);
         function SyncTimeLine() {
@@ -272,8 +272,8 @@ var riggerLayaSA;
         SyncTimeLine.sign = "_sign";
         return SyncTimeLine;
     }(riggerIOC.WaitableTask));
-    riggerLayaSA.SyncTimeLine = SyncTimeLine;
-})(riggerLayaSA || (riggerLayaSA = {}));
+    riggerLayaSync.SyncTimeLine = SyncTimeLine;
+})(riggerLayaSync || (riggerLayaSync = {}));
 var WebGL = Laya.WebGL;
 // 程序入口
 var GameMain = /** @class */ (function () {
@@ -298,12 +298,12 @@ var GameMain = /** @class */ (function () {
                         complete = riggerIOC.Handler.create(this, this.onComplete, null, false);
                         cancel = riggerIOC.Handler.create(this, this.onCancel, null, false);
                         taskExe = new riggerIOC.TaskExecutor();
-                        t1 = riggerLayaSA.SyncTween.to(sp, { x: 100 }, 1000);
+                        t1 = riggerLayaSync.SyncTween.to(sp, { x: 100 }, 1000);
                         taskExe.setCompleteHandler(complete, null);
                         taskExe.setCancelHandler(cancel, null);
                         // await t1.wait()
-                        taskExe.add(riggerLayaSA.SyncTween.to(sp, { x: 100 }, 2000), singComplete, [sp, { x: 100 }], singCancel, [sp, { x: 100 }]);
-                        taskExe.add(riggerLayaSA.SyncTween.to(sp, { y: 50 }, 2000), singComplete, [sp, { y: 50 }], singCancel, [sp, { y: 50 }]);
+                        taskExe.add(riggerLayaSync.SyncTween.to(sp, { x: 100 }, 2000), singComplete, [sp, { x: 100 }], singCancel, [sp, { x: 100 }]);
+                        taskExe.add(riggerLayaSync.SyncTween.to(sp, { y: 50 }, 2000), singComplete, [sp, { y: 50 }], singCancel, [sp, { y: 50 }]);
                         // await riggerLayaSA.SyncTween.to(sp, {x: 100}, 1000).wait();
                         // await riggerLayaSA.SyncTween.to(sp, {y: 100}, 1000).wait();
                         setTimeout(this.onInterupt, 1000, taskExe);
@@ -340,7 +340,7 @@ var GameMain = /** @class */ (function () {
                         sp.graphics.drawCircle(30, 30, 30, "yellow");
                         Laya.stage.addChild(sp);
                         sp.name = "sprite1";
-                        t1 = riggerLayaSA.SyncTimeLine.create();
+                        t1 = riggerLayaSync.SyncTimeLine.create();
                         t1.addLabel("userfightZoomIn", 0).to(sp, { "x": 50 }, 500, null, 0)
                             .addLabel("userfightLanding", 0).to(sp, { "x": 100 }, 300, null, 0)
                             .addLabel("pcfightZoomIn", 0).to(sp, { "y": 50 }, 500, null, 0);
@@ -349,14 +349,15 @@ var GameMain = /** @class */ (function () {
                         sp2.graphics.drawCircle(130, 130, 30, "red");
                         Laya.stage.addChild(sp2);
                         sp2.name = "sprite2";
-                        t2 = riggerLayaSA.SyncTimeLine.create();
+                        t2 = riggerLayaSync.SyncTimeLine.create();
                         t2.addLabel("userfightZoomIn", 0).to(sp2, { "x": 50 }, 500, null, 0)
                             .addLabel("userfightLanding", 0).to(sp2, { "x": 100 }, 300, null, 0)
                             .addLabel("pcfightZoomIn", 0).to(sp2, { "y": 50 }, 500, null, 0);
                         cont.add(t2.play("userfightZoomIn", false), singleCompleteH, [sp2], singleCancelH, [sp2]);
-                        setTimeout(this.onInterupt, 1300, cont);
-                        return [4 /*yield*/, cont.executeAsync()];
+                        // setTimeout(this.onInterupt, 1300, cont)
+                        return [4 /*yield*/, cont.execute()];
                     case 1:
+                        // setTimeout(this.onInterupt, 1300, cont)
                         _a.sent();
                         t1.recover();
                         t2.recover();
@@ -420,8 +421,8 @@ new GameMain();
 /**
 * 同步版Tween
 */
-var riggerLayaSA;
-(function (riggerLayaSA) {
+var riggerLayaSync;
+(function (riggerLayaSync) {
     var SyncTween = /** @class */ (function (_super) {
         __extends(SyncTween, _super);
         function SyncTween() {
@@ -661,6 +662,6 @@ var riggerLayaSA;
         SyncTween.TWEEN_TO = 2;
         return SyncTween;
     }(riggerIOC.WaitableTask));
-    riggerLayaSA.SyncTween = SyncTween;
-})(riggerLayaSA || (riggerLayaSA = {}));
+    riggerLayaSync.SyncTween = SyncTween;
+})(riggerLayaSync || (riggerLayaSync = {}));
 //# sourceMappingURL=game.js.map
