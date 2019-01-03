@@ -13,6 +13,7 @@ class GameMain {
         sp.graphics.drawCircle(30, 30, 30, "yellow");
         Laya.stage.addChild(sp);
         sp.name = "sprite1"
+        
         let singComplete = riggerIOC.Handler.create(this, this.onSingleComplete, null, false);
         let singCancel = riggerIOC.Handler.create(this, this.onSingleCancel, null, false);
         let complete = riggerIOC.Handler.create(this, this.onComplete, null, false);
@@ -29,7 +30,10 @@ class GameMain {
         // await riggerLayaSA.SyncTween.to(sp, {y: 100}, 1000).wait();
 
         setTimeout(this.onInterupt, 1000, taskExe);
-        await taskExe.executeAsync();
+        // 并发执行
+        // await taskExe.executeAsync();
+        // 顺序执行
+        await taskExe.execute();
         console.log("tween complete");
 
     }
