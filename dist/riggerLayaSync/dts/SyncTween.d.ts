@@ -117,6 +117,7 @@ declare module riggerLayaSync {
         private delay?;
         private coverBefore?;
         private setTweenParams;
+        private clearTweenParams;
         protected startTask(): SyncTween;
         private startTween;
         private onComplete;

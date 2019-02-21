@@ -184,9 +184,7 @@ module riggerLayaSync {
 		clear(): void {
 			this.mContent.clear();
 			if(this.outComplete) this.outComplete = null;
-			this.props = null;
-			this.target = null;
-			this.ease = null;
+			this.clearTweenParams();
 		}
 
         /**
@@ -230,6 +228,17 @@ module riggerLayaSync {
 			this.outComplete = complete;
 			this.delay = delay;
 			this.coverBefore = coverBefore;
+		}
+
+		private clearTweenParams() {
+			this.tweenType = null;
+			this.target = null;
+			this.props = null;
+			this.duration = null;
+			this.ease = null;
+			this.outComplete = null;
+			this.delay = null;
+			this.coverBefore = null;
 		}
 
 		protected startTask(): SyncTween {
